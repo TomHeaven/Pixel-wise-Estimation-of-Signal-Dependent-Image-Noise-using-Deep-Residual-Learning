@@ -468,101 +468,26 @@ class DatabaseCreator:
             return inFile[name].value, inFile[res_name].value
 
 def create_pristine():
-    dc = DatabaseCreator('/Volumes/文档/实验数据/tf_demosaic/pristine_images', '/Volumes/文档/实验数据/Denoiser/pristine_rgb2gray.h5', \
+    dc = DatabaseCreator('data/pristine_images', 'data/pristine_rgb2gray.h5', \
                          inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
                          stride=128 * 2)
     dc.create_hdf5('rgb', 'gray')
 
 def create_kodak_mcm():
-    dc = DatabaseCreator('/Volumes/文档/实验数据/Denoiser/train_kodak', '/Volumes/文档/实验数据/Denoiser/kodak_rgb2gray.h5', \
+    dc = DatabaseCreator('data/train_kodak', 'data/kodak_rgb2gray.h5', \
                          inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
                          stride=128 * 2)
     dc.create_hdf5('rgb', 'gray')
 
-    dc = DatabaseCreator('/Volumes/文档/实验数据/Denoiser/train_mcm', '/Volumes/文档/实验数据/Denoiser/mcm_rgb2gray.h5', \
+    dc = DatabaseCreator('data/train_mcm', 'data/mcm_rgb2gray.h5', \
                          inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
                          stride=128 * 2)
     dc.create_hdf5('rgb', 'gray')
-
-def create_raw():
-    # 注意输入Bayer图的格式为：'GRBG'
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/data_input', '/Volumes/文档/实验数据/DeepISP/data_input.h5', \
-                         inImageType=DatabaseCreator.IM_TIFF_16, outImageType=DatabaseCreator.IM_BAYER3, patchSize=128,
-                         stride=256*2, inBayerType='GRBG', unit_norm=4)
-    dc.create_hdf5('bayer', 'bayer3d')
-
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/data_input2', '/Volumes/文档/实验数据/DeepISP/data_input2.h5', \
-                         inImageType=DatabaseCreator.IM_TIFF_16, outImageType=DatabaseCreator.IM_BAYER3, patchSize=128,
-                         stride=256 * 2, inBayerType='GRBG', unit_norm=4)
-    dc.create_hdf5('bayer', 'bayer3d')
-
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/data_output', '/Volumes/文档/实验数据/DeepISP/data_output.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
-                         stride=256*2)
-    dc.create_hdf5('rgb', 'bayer3d')
-
-
-
-def create_raw_mi5s():
-    # 注意输入Bayer图的格式为：'GRBG'
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/小米5s/dng_tiff', '/Volumes/文档/实验数据/DeepISP/mi_dng_input.h5', \
-                         inImageType=DatabaseCreator.IM_TIFF_16, outImageType=DatabaseCreator.IM_BAYER3, patchSize=128,
-                         stride=128, inBayerType='RGGB', unit_norm=4)
-    dc.create_hdf5('bayer', 'bayer3d', part_num=20)
-
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/小米5s/jpg', '/Volumes/文档/实验数据/DeepISP/mi_jpg_output.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
-                         stride=128)
-    dc.create_hdf5('rgb', 'gray', part_num=20)
-
-
-def create_dm_mi5s():
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/小米5s/demosaicked', '/Volumes/文档/实验数据/DeepISP/mi_dm.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
-                         stride=128)
-    dc.create_hdf5('rgb', 'gray', part_num=20)
-
-def create_dm_mi5s_lab():
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/小米5s/demosaicked', '/Volumes/文档/实验数据/DeepISP/mi_dm_lab.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_RGB, patchSize=128,
-                         stride=128, save_format=DatabaseCreator.FMT_LAB)
-    dc.create_hdf5('rgb', 'lab', part_num=20)
-
-    dc = DatabaseCreator('/Volumes/文档/实验数据/DeepISP/小米5s/jpg', '/Volumes/文档/实验数据/DeepISP/mi_jpg_lab.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_RGB, patchSize=128,
-                         stride=128, save_format=DatabaseCreator.FMT_LAB)
-    dc.create_hdf5('rgb', 'lab', part_num=20)
-
-def create_wb():
-    dc = DatabaseCreator('/Volumes/文档/实验数据/单光源白平衡/original_image', '/Volumes/文档/实验数据/单光源白平衡/original_image.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
-                         stride=512)
-    dc.create_hdf5('rgb', 'gray', part_num=100)
-
-    dc = DatabaseCreator('/Volumes/文档/实验数据/单光源白平衡/image_white', '/Volumes/文档/实验数据/单光源白平衡/image_white.h5', \
-                         inImageType=DatabaseCreator.IM_RGB, outImageType=DatabaseCreator.IM_GRAY, patchSize=128,
-                         stride=512)
-    dc.create_hdf5('rgb', 'gray', part_num=100)
-
-
-def dm_mi5s_to_folder():
-    dc = DatabaseCreator()
-    #dc.hdf52folder('/Volumes/文档/实验数据/DeepISP/mi_dm.h5', 'rgb', '/Volumes/文档/实验数据/pixel2pixel/mi_dm_lab_patches')
-    #dc.hdf52folder('/Volumes/文档/实验数据/DeepISP/mi_jpg_output.h5', 'rgb', '/Volumes/文档/实验数据/pixel2pixel/mi_jpg_patches')
-    dc.hdf52folder('/Volumes/文档/实验数据/DeepISP/mi_isp.h5', 'rgb', '/Volumes/文档/实验数据/pixel2pixel/mi_isp_patches')
-
-
 
 
 if __name__ == '__main__':
-    #create_pristine()
-    #create_kodak_mcm()
-    #create_raw_mi5s()
-    #create_dm_mi5s()
-    #create_dm_mi5s_lab()
-    #create_wb()
-
-    dm_mi5s_to_folder()
+    create_pristine()
+    create_kodak_mcm()
 
 
 

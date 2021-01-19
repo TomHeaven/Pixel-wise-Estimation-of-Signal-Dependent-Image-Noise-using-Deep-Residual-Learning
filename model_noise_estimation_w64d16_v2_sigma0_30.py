@@ -562,8 +562,8 @@ if __name__ == '__main__':
     #### end configuration
 
     if bTrain:
-        train('models/%s' % modelPath, '/Volumes/文档/实验数据/Estimator/pristine_rgb2gray.h5',
-              '/Volumes/文档/实验数据/Estimator/kodak_rgb2gray.h5', width, depth, minNoiseLevel, maxNoiseLevel, device=device, x_shape=[128, 128, 3],
+        train('models/%s' % modelPath, 'data/pristine_rgb2gray.h5',
+              'data/kodak_rgb2gray.h5', width, depth, minNoiseLevel, maxNoiseLevel, device=device, x_shape=[128, 128, 3],
               y_shape=[128, 128, 3])
     else:
         parser = argparse.ArgumentParser()
